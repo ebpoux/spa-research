@@ -19,3 +19,7 @@ var spa = (function() {
         initModule: initModule
     };
 }());
+
+//$(function() {
+//    spa.initModule($('#spa'));
+//});
