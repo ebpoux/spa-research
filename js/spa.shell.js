@@ -10,34 +10,22 @@
  */
 /*global $, spa */
 spa.shell = (function() {
-//---------------- BEGIN MODULE SCOPE VARIABLES --------------
+    //---------------- BEGIN MODULE SCOPE VARIABLES --------------
     var
-        configMap = {
-            main_html: String()
-                + '<div class="spa-shell-head">'
-                + '<div class="spa-shell-head-logo"></div>'
-                + '<div class="spa-shell-head-acct"></div>'
-                + '<div class="spa-shell-head-search"></div>'
-                + '</div>'
-                + '<div class="spa-shell-main">'
-                + '<div class="spa-shell-main-nav"></div>'
-                + '<div class="spa-shell-main-content"></div>'
-                + '</div>'
-                + '<div class="spa-shell-foot"></div>'
-                + '<div class="spa-shell-chat"></div>'
-                + '<div class="spa-shell-modal"></div>',
-            chat_extend_time: 250,
-            chat_retract_time: 300,
-            chat_extend_height: 450,
-            chat_retract_height: 15,
-            chat_extended_title: 'Click to retract',
-            chat_retracted_title: 'Click to extend'
-        },
-    stateMap = {
-        $container: null,
-            is_chat_retracted: true
+    configMap = {
+        main_html: String() + '<div class="spa-shell-head">' + '<div class="spa-shell-head-logo"></div>' + '<div class="spa-shell-head-acct"></div>' + '<div class="spa-shell-head-search"></div>' + '</div>' + '<div class="spa-shell-main">' + '<div class="spa-shell-main-nav"></div>' + '<div class="spa-shell-main-content"></div>' + '</div>' + '<div class="spa-shell-foot"></div>' + '<div class="spa-shell-chat"></div>' + '<div class="spa-shell-modal"></div>',
+        chat_extend_time: 250,
+        chat_retract_time: 300,
+        chat_extend_height: 450,
+        chat_retract_height: 15,
+        chat_extended_title: 'Click to retract',
+        chat_retracted_title: 'Click to extend'
     },
-    jqueryMap = {},
+        stateMap = {
+            $container: null,
+            is_chat_retracted: true
+        },
+        jqueryMap = {},
         setJqueryMap, toggleChat, onClickChat, initModule;
     //----------------- END MODULE SCOPE VARIABLES ---------------
 
@@ -48,7 +36,9 @@ spa.shell = (function() {
     // Begin DOM method /setJqueryMap/
     setJqueryMap = function() {
         var $container = stateMap.$container;
-        jqueryMap = {$container: $container};
+        jqueryMap = {
+            $container: $container
+        };
         jqueryMap = {
             $container: $container,
             $chat: $container.find('.spa-shell-chat')
@@ -73,7 +63,7 @@ spa.shell = (function() {
     //
     toggleChat = function(do_extend, callback) {
         var
-            px_chat_ht = jqueryMap.$chat.height(),
+        px_chat_ht = jqueryMap.$chat.height(),
             is_open = px_chat_ht === configMap.chat_extend_height,
             is_closed = px_chat_ht === configMap.chat_retract_height,
             is_sliding = !is_open && !is_closed;
@@ -83,13 +73,14 @@ spa.shell = (function() {
         }
         // Begin extend chat slider
         if (do_extend) {
-            jqueryMap.$chat.animate(
-                {height: configMap.chat_extend_height},
-            configMap.chat_extend_time,
+            jqueryMap.$chat.animate({
+                    height: configMap.chat_extend_height
+                },
+                configMap.chat_extend_time,
                 function() {
                     jqueryMap.$chat.attr(
                         'title', configMap.chat_extended_title
-                        );
+                    );
                     stateMap.is_chat_retracted = false;
                     if (callback) {
                         callback(jqueryMap.$chat);
@@ -101,13 +92,14 @@ spa.shell = (function() {
         // End extend chat slider
 
         // Begin retract chat slider
-        jqueryMap.$chat.animate(
-            {height: configMap.chat_retract_height},
-        configMap.chat_retract_time,
+        jqueryMap.$chat.animate({
+                height: configMap.chat_retract_height
+            },
+            configMap.chat_retract_time,
             function() {
                 jqueryMap.$chat.attr(
                     'title', configMap.chat_retracted_title
-                    );
+                );
                 stateMap.is_chat_retracted = true;
                 if (callback) {
                     callback(jqueryMap.$chat);
@@ -123,7 +115,11 @@ spa.shell = (function() {
 
     //------------------- BEGIN EVENT HANDLERS -------------------
     onClickChat = function(event) {
-        toggleChat(stateMap.is_chat_retracted);
+        if (toggleChat(stateMap.is_chat_retracted)) {
+            $.uriAnchor.setAnchor({
+                chat: (stateMap.is_chat_retracted ? 'open' : 'closed')
+            });
+        }
         return false;
     };
     //-------------------- END EVENT HANDLERS --------------------
@@ -140,7 +136,7 @@ spa.shell = (function() {
         stateMap.is_chat_retracted = true;
         jqueryMap.$chat
             .attr('title', configMap.chat_retracted_title)
-        .click( onClickChat );
+            .click(onClickChat);
 
         // test toggle
         setTimeout(function() {
@@ -151,6 +147,8 @@ spa.shell = (function() {
         }, 8000);
     };
     // End PUBLIC method /initModule/
-    return {initModule: initModule};
+    return {
+        initModule: initModule
+    };
     //------------------- END PUBLIC METHODS ---------------------
 }());
