@@ -44,7 +44,7 @@
 }
 .spa-shell-main-nav {
     width : 250px;
-    background : #eee;
+    background : #CAC6C6;
 }
 .spa-x-closed .spa-shell-main-nav {
     width : 0;
@@ -52,7 +52,7 @@
 .spa-shell-main-content {
     left : 250px;
     right : 0;
-    background : #ddd;
+    background : #9C9999;
 }
 .spa-x-closed .spa-shell-main-content {
     left : 0;

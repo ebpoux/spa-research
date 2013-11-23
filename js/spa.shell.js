@@ -250,7 +250,7 @@ spa.shell = (function() {
         setJqueryMap();
 
         // initialize chat slider and bind click handler
-        stateMap.is_chat_retracted = false;
+        stateMap.is_chat_retracted = true;
         jqueryMap.$chat
             .attr('title', configMap.chat_retracted_title)
             .click(onClickChat);
@@ -265,6 +265,11 @@ spa.shell = (function() {
         // and initialized, otherwise they will not be ready to handle
         // the trigger event, which is used to ensure the anchor
         // is considered on-load
+        // 
+        // bind hash change events
+        // 
+//        $(window).bind('hashchange', onChangeAddress);
+//        $(window).trigger('hashchange');
         //
         $(window)
             .bind('hashchange', onHashchange)
