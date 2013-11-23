@@ -245,6 +245,17 @@ spa.shell = (function() {
     //------------------- BEGIN PUBLIC METHODS -------------------
     // Begin Public method /initModule/
     initModule = function($container) {
+        stateMap.$container = $container;
+        $container.html(configMap.main_html);
+        setJqueryMap();
+
+        // initialize chat slider and bind click handler
+        stateMap.is_chat_retracted = false;
+        jqueryMap.$chat
+            .attr('title', configMap.chat_retracted_title)
+            .click(onClickChat);
+
+
         // configure uriAnchor to use our schema
         $.uriAnchor.configModule({
             schema_map: configMap.anchor_schema_map
@@ -258,6 +269,7 @@ spa.shell = (function() {
         $(window)
             .bind('hashchange', onHashchange)
             .trigger('hashchange');
+
     };
     // End PUBLIC method /initModule/
     return {
