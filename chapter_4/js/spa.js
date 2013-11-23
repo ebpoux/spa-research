@@ -20,6 +20,6 @@ var spa = (function() {
     };
 }());
 
-$(function() {
-    spa.initModule($('#spa'));
-});
+//$(function() {
+//    spa.initModule($('#spa'));
+//});
